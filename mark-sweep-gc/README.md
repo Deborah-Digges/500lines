@@ -1,6 +1,6 @@
 ## Mark Sweep Garbage Collector
 
-A high level implementation of the working of a mark-sweep garbage collector.
+A high level implementation of a mark-sweep garbage collector.
 
 A model of a *stack based VM* is created where the stack holds references to all objects ever allocated. A *freeList* of memory is maintained from which all allocations are made. 
 
@@ -24,8 +24,8 @@ The GC is invoked in one of two situations:
 
 ##Build & Run
 
-<p>*make*</p>
-<p>*./marksweep*</p>
+*make*<br/>
+*./marksweep*
 
 
 
