@@ -1,5 +1,5 @@
 #include <cstdlib>
-#include <iostream>
+#include <iostream>a
 
 #include "vm.h"
 
@@ -16,7 +16,6 @@ void assert(int condition, const char* message)
 
 void testPreservesNonGarbage()
 {
-	std::cout << "Test 1: Objects that are not garbage are preserved.\n";
 	VM* vm = new VM();
 
 	/* Create two integer "variables" on the VM's execution stack*/
@@ -36,7 +35,6 @@ void testPreservesNonGarbage()
 
 void testCollectsGarbage()
 {
-	std::cout << "Test 2: Objects that are garbage are collected.\n";
 	VM* vm = new VM();
 
 	/* Two Integers are created from the available blocks of memory */
@@ -63,15 +61,14 @@ void testCollectsGarbage()
 
 void testMarksNestedReachable()
 {
-	std::cout << "Test 3: Nested objects are properly marked\n";
 	VM* vm = new VM();
 
 	/*	
-	*		pointer to pair => present on the stack
-	*		/			\
-	*	pair 			pair
-	*	/  \			/  \		
-	*  1   2           3   4
+	*	pointer to pair  => present on the stack
+	*	/		\
+	*	pair 		pair
+	*	/  \		/  \		
+	*      1   2           3   4
 	*
 	*/
 
@@ -86,7 +83,7 @@ void testMarksNestedReachable()
 	
 	/* Nothing is collected as all objects are reachable starting from the roots */
 	
-	assert(vm->getNumberAllocated() == 7, "Push(Atom/Int) Incorrect");	
+	assert(vm->getNumberAllocated() == 7, "Push(Atom/Int) Failed");	
   	vm->gc();
 	assert(vm->getNumberAllocated() == 7, "GC failed");
 
@@ -96,15 +93,14 @@ void testMarksNestedReachable()
 
 void testCollectsNestedUnreachable()
 {
-	std::cout << "Test 4: Nested unreachable objects are collected\n";
 	VM* vm = new VM();
 
 	/*	
-	*		pointer to pair => present on the stack
-	*		/			\
-	*	pair 			pair
-	*	/  \			/  \		
-	*  1   2           3   4
+	*	pointer to pair => present on the stack
+	*	/	   \
+	*	pair       pair
+	*	/  \	   /  \		
+	       1   2      3   4
 	*
 	*/
 
@@ -129,19 +125,8 @@ void testCollectsNestedUnreachable()
 
 void testCollectsCycles()
 {
-	std::cout << "Test 5: Cycles are properly handled\n";
 	VM* vm = new VM();
-	/*
-	*		Pair => left: A, right: B
-	*	  __________ 
-	*	 |			 |
-	*   (A)	   (B)   |
-	*	pair -- pair - 	
-	*	/  	    /  
-	*  1       3   
-	*
-	*/
-
+	
 	vm->pushAtom(1);
 	vm->pushAtom(2);
 	Object* a = vm->pushPair();
@@ -166,7 +151,6 @@ void testCollectsCycles()
 
 void testThresholdGCInvocation()
 {
-	std::cout << "Test 6: GC invoked when maximum threshold reached\n";
 	int threshold = 5;
 
 	VM* vm = new VM(threshold);
@@ -200,7 +184,7 @@ void testMemoryExhaustion()
 	assert(vm->getNumberAllocated() == heapSize, "Push failed");
 	delete vm;
 	
-	/* There are 7 *heapSize* allocated objects all of which are reachable 
+	/* There are *heapSize* allocated objects all of which are reachable 
 	*  Another allocation will try to free memory by invoking the GC 
 	*  The GC fails to release memory as everything is reachable
 	*  The allocation fails with an out of memory error
