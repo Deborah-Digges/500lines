@@ -182,8 +182,7 @@ void testMemoryExhaustion()
 	}
 	
 	assert(vm->getNumberAllocated() == heapSize, "Push failed");
-	delete vm;
-	
+		
 	/* There are *heapSize* allocated objects all of which are reachable 
 	*  Another allocation will try to free memory by invoking the GC 
 	*  The GC fails to release memory as everything is reachable
