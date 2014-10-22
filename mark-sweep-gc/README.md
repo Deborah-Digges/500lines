@@ -2,7 +2,7 @@
 
 A high level implementation of a mark-sweep garbage collector.
 
-A model of a *stack based VM* is created where the stack holds references to all objects ever allocated. A *freeList* of memory is maintained from which all allocations are made. 
+A model of a *stack based VM* is created where the stack is used to hold references to all the objects created. A *freeList* of memory is maintained from which all allocations are made. 
 
 The parameters of the VM that can be configured are:
 <ol>
